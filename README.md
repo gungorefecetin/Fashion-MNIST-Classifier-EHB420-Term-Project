@@ -33,7 +33,7 @@ The core question: in a shallow architecture, does activation choice still matte
 
 A Next.js web app lets you upload any clothing image and see the model's prediction with confidence scores.
 
-![Demo screenshot](./docs/demo-screenshot.png)
+<img width="447" height="542" alt="Screenshot 2026-05-14 at 22 14 50" src="https://github.com/user-attachments/assets/bd80e8d3-cfcb-420f-b125-9e704e2e8f94" />
 
 **Try it locally:**
 
@@ -130,7 +130,7 @@ The other thing that surprised us was how cleanly the confusion matrix told a st
 - Test the same activation comparison on a 5-6 layer CNN — We'd expect Sigmoid to actually fail there, not just slow down
 - Add RBF network baseline (covered in the course syllabus but not in mainstream tutorials)
 - Optimizer comparison (SGD vs Adam vs RMSprop)
-- Move to higher resolution / RGB clothing dataset<img width="447" height="542" alt="Screenshot 2026-05-14 at 22 14 50" src="https://github.com/user-attachments/assets/bd80e8d3-cfcb-420f-b125-9e704e2e8f94" />
+- Move to higher resolution / RGB clothing dataset
  for the production-grade version
 
 ## References
