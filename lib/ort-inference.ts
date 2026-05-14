@@ -16,10 +16,10 @@ let sessionPromise: Promise<InferenceSession> | null = null
 async function getSession(): Promise<InferenceSession> {
   if (!sessionPromise) {
     sessionPromise = (async () => {
-      const ort = await import("onnxruntime-web")
-      // Serve WASM files we copied to public/ort/
+      // Import the plain (non-WebGPU/JSEP) WASM build explicitly so the
+      // runtime doesn't try to fetch the jsep .mjs that we don't ship.
+      const ort = await import("onnxruntime-web/wasm")
       ort.env.wasm.wasmPaths = "/ort/"
-      // Single-threaded keeps things simple — model is tiny, threads add overhead here
       ort.env.wasm.numThreads = 1
       return ort.InferenceSession.create("/model.onnx", {
         executionProviders: ["wasm"],
@@ -97,7 +97,7 @@ export interface PredictionResult {
 
 export async function predict(file: File): Promise<PredictionResult> {
   const [session, input] = await Promise.all([getSession(), imageToTensor(file)])
-  const ort = await import("onnxruntime-web")
+  const ort = await import("onnxruntime-web/wasm")
   const tensor: OrtTensor = new ort.Tensor("float32", input, [1, 1, 28, 28])
   const outputs = await session.run({ input: tensor })
   const logits = outputs.logits.data as Float32Array
