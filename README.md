@@ -1,2 +1,2 @@
 # Fashion-MNIST-Classifier-EHB420-Term-Project
-Empirical comparison of MLP and CNN architectures on Fashion-MNIST, analyzing the impact of spatial inductive bias and activation functions (ReLU, Sigmoid, Tanh) in PyTorch.
+This repository contains a comparative study on multi-class image classification using the Fashion-MNIST dataset. Built with PyTorch, the project empirically evaluates how different architectural decisions (MLP vs. CNN) and activation functions (ReLU, Sigmoid, Tanh) affect model performance and convergence. By analyzing parameter sharing, spatial information preservation, and the gradient vanishing problem, this project bridges the gap between neural network theory and practical implementation.
