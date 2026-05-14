@@ -1,8 +1,9 @@
 "use client"
 
-import { useState, useCallback, useRef } from "react"
+import { useState, useCallback, useEffect, useRef } from "react"
 import { Upload, X, Sparkles, ArrowRight } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { predict, warmup } from "@/lib/ort-inference"
 
 const FASHION_CLASSES = [
   { id: 0, name: "T-shirt/Top", icon: "👕" },
@@ -82,6 +83,10 @@ export function FashionClassifier() {
     if (fileInputRef.current) fileInputRef.current.value = ""
   }, [])
 
+  useEffect(() => {
+    warmup()
+  }, [])
+
   const analyzeImage = useCallback(async () => {
     if (!imageFile) return
 
@@ -89,19 +94,11 @@ export function FashionClassifier() {
     setError(null)
 
     try {
-      const formData = new FormData()
-      formData.append("file", imageFile)
-
-      const res = await fetch("/api/predict", { method: "POST", body: formData })
-      if (!res.ok) {
-        const err = await res.json().catch(() => ({}))
-        throw new Error(err.error ?? `Request failed (${res.status})`)
-      }
-      const data = (await res.json()) as PredictionResult
-      const sorted = [...data.allProbabilities].sort(
+      const result = await predict(imageFile)
+      const sorted = [...result.allProbabilities].sort(
         (a, b) => b.probability - a.probability
       )
-      setPrediction({ ...data, allProbabilities: sorted })
+      setPrediction({ ...result, allProbabilities: sorted })
     } catch (err) {
       setError((err as Error).message)
     } finally {

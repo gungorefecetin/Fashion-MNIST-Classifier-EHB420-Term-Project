@@ -83,7 +83,7 @@ export default function Home() {
             EHB420E — Artificial Neural Networks Term Project
           </p>
           <p className="text-sm text-muted-foreground">
-            Efe Karagül · May 2026
+            Güngör Efe Çetin & Yağız Çoban · May 2026
           </p>
         </div>
       </footer>
